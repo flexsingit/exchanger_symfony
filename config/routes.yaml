@@ -1,0 +1,3 @@
+index:
+    path: /rates
+    controller: App\Controller\RatesController::index

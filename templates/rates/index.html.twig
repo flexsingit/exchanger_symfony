@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RatesController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Hello {{ controller_name }}! ✅</h1>
+
+    {# total items count #}
+    <div class="count">
+        Total Items {{ pagination.getTotalItemCount }}
+    </div>
+    <table>
+        <tr>
+            {# sorting of properties based on query components #}
+            <th>{{ knp_pagination_sortable(pagination, 'Id', 'r.id') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Base Currency', 'r.base_currency') }}</th>
+            <th{% if pagination.isSorted('r.currency') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Currency', 'r.currency') }}</th>
+            <th{% if pagination.isSorted('r.rate') %} class="sorted"{% endif %}>{{ knp_pagination_sortable(pagination, 'Rate', 'r.rate') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Created At', ['r.created_at']) }}</th>
+        </tr>
+
+        {# table body #}
+        {% for rate in pagination %}
+            <tr {% if loop.index is odd %}class="color"{% endif %}>
+                <td>{{ rate.id }}</td>
+                <td>{{ rate.basecurrency }}</td>
+                <td>{{ rate.currency }}</td>
+                <td>{{ rate.rate }}</td>
+                <td>{{ rate.createdat | date('Y-m-d H:i:s') }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {# display navigation #}
+    <div class="navigation">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+</div>
+{% endblock %}
